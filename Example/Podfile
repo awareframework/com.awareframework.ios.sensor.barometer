@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'com.awareframework.ios.sensor.barometer_Example' do
+  pod 'com.awareframework.ios.sensor.barometer', :path => '../'
+
+  target 'com.awareframework.ios.sensor.barometer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
