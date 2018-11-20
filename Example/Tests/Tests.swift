@@ -1,5 +1,5 @@
 import XCTest
-import com.awareframework.ios.sensor.barometer
+import com_awareframework_ios_sensor_barometer
 
 class Tests: XCTestCase {
     
