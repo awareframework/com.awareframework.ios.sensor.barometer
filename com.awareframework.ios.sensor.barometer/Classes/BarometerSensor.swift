@@ -36,7 +36,7 @@ public class BarometerSensor: AwareSensor {
     
     public static let ACTION_AWARE_BAROMETER_SYNC = "com.awareframework.android.sensor.barometer.SENSOR_SYNC"
     
-    var CONFIG = Config()
+    public var CONFIG = Config()
     
     var timer:Timer? = nil
     
