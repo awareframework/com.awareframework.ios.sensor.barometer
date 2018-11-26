@@ -1,4 +1,4 @@
-# Aware Barometer
+# AWARE: Barometer
 
 [![CI Status](https://img.shields.io/travis/awareframework/com.awareframework.ios.sensor.barometer.svg?style=flat)](https://travis-ci.org/awareframework/com.awareframework.ios.sensor.barometer)
 [![Version](https://img.shields.io/cocoapods/v/com.awareframework.ios.sensor.barometer.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.barometer)
@@ -40,7 +40,7 @@ Class to hold the configuration of the sensor.
 #### Fields
 + `sensorObserver: BarometerSensor.Observer`: Callback for live data updates.
 + `frequency: Int`: Data samples to collect per second (Hz). (default = 5)
-+ `period: Float`: Period to save data in minutes. (default = 1)
++ `period: Double`: Period to save data in minutes. (default = 1)
 + `threshold: Double`: If set, do not record consecutive points if change in value is less than the set value.
 + `enabled: Boolean` Sensor is enabled or not. (default = `false`)
 + `debug: Boolean` enable/disable logging to `Logcat`. (default = `false`)
@@ -63,7 +63,7 @@ Contains the raw sensor data.
 | label     | String | Customizable label. Useful for data calibration or traceability  |
 | deviceId  | String | AWARE device UUID                                                |
 | label     | String | Customizable label. Useful for data calibration or traceability  |
-| timestamp | Long   | Unixtime milliseconds since 1970                                 |
+| timestamp | Int64   | Unixtime milliseconds since 1970                                 |
 | timezone  | Int    | Timezone of the device                                           |
 | os        | String | Operating system of the device (ex. android)                     |
 
