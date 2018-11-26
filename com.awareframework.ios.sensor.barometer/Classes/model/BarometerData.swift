@@ -12,13 +12,11 @@ public class BarometerData: AwareObject {
     public static var TABLE_NAME = "barometerData"
     @objc dynamic public var pressure:Double = 0
     @objc dynamic public var eventTimestamp:Int64 = 0
-    @objc dynamic public var accuracy:Int = 0
     
     public override func toDictionary() -> Dictionary<String, Any> {
         var dict = super.toDictionary()
         dict["pressure"] = pressure
         dict["eventTimestamp"] = eventTimestamp
-        dict["accuracy"] = accuracy
         return dict
     }
 }

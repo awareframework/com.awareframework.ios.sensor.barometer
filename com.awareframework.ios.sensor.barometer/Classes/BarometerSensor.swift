@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreMotion
-import SwiftyJSON
 import com_awareframework_ios_sensor_core
 
 extension Notification.Name{
@@ -54,7 +53,7 @@ public class BarometerSensor: AwareSensor {
          * 20 - sample per second
          * The maximum interval is 1 on iOS.
          */
-        public var interval: Double = 5
+        public var frequency: Int = 5
         
         /**
          * Period to save data in minutes. (optional)
@@ -72,8 +71,19 @@ public class BarometerSensor: AwareSensor {
             dbPath = "aware_barometer"
         }
         
-        public convenience init(_ json:JSON){
+        public convenience init(_ config:Dictionary<String,Any>){
             self.init()
+            if let frequency = config["frequency"] as? Int {
+                self.frequency = frequency
+            }
+            
+            if let period = config["period"] as? Double {
+                self.period = period
+            }
+            
+            if let threshold = config["threshold"] as? Double {
+                self.threshold = threshold
+            }
         }
         
         public func apply(closure:(_ config: BarometerSensor.Config ) -> Void ) -> Self{
@@ -115,7 +125,7 @@ public class BarometerSensor: AwareSensor {
             }
         }
         if self.timer == nil {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0/self.CONFIG.interval , repeats: true, block: { (timer) in
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0/Double(self.CONFIG.frequency) , repeats: true, block: { (timer) in
                 if let altData = self.currentAltimeterData {
                     let now = Date().timeIntervalSince1970
                     

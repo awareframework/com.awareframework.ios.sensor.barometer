@@ -18,6 +18,32 @@ class Tests: XCTestCase {
         XCTAssert(true, "Pass")
     }
     
+    func testConfig(){
+        let frequency: Int = 10
+        let period: Double = 10.0
+        let threshold: Double = 1.0
+        
+        // default values
+        var sensor = BarometerSensor.init()
+        XCTAssertEqual(5,   sensor.CONFIG.frequency)
+        XCTAssertEqual(1.0, sensor.CONFIG.period)
+        XCTAssertEqual(0.0, sensor.CONFIG.threshold)
+        
+        sensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
+            config.frequency = frequency
+            config.period = period
+            config.threshold = threshold
+        })
+        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
+        XCTAssertEqual(period,    sensor.CONFIG.period)
+        XCTAssertEqual(threshold, sensor.CONFIG.threshold)
+        
+        sensor = BarometerSensor.init(BarometerSensor.Config.init(["frequency":frequency, "period":period, "threshold":threshold]))
+        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
+        XCTAssertEqual(period,    sensor.CONFIG.period)
+        XCTAssertEqual(threshold, sensor.CONFIG.threshold)
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure() {
