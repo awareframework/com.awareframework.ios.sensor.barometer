@@ -71,8 +71,8 @@ public class BarometerSensor: AwareSensor {
             dbPath = "aware_barometer"
         }
         
-        public convenience init(_ config:Dictionary<String,Any>){
-            self.init()
+        public override func set(config: Dictionary<String, Any>) {
+            super.set(config: config)
             if let frequency = config["frequency"] as? Int {
                 self.frequency = frequency
             }

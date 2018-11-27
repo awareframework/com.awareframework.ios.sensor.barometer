@@ -29,6 +29,7 @@ class Tests: XCTestCase {
         XCTAssertEqual(1.0, sensor.CONFIG.period)
         XCTAssertEqual(0.0, sensor.CONFIG.threshold)
         
+        // apply
         sensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
             config.frequency = frequency
             config.period = period
@@ -38,7 +39,14 @@ class Tests: XCTestCase {
         XCTAssertEqual(period,    sensor.CONFIG.period)
         XCTAssertEqual(threshold, sensor.CONFIG.threshold)
         
+        // init with dictionary
         sensor = BarometerSensor.init(BarometerSensor.Config.init(["frequency":frequency, "period":period, "threshold":threshold]))
+        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
+        XCTAssertEqual(period,    sensor.CONFIG.period)
+        XCTAssertEqual(threshold, sensor.CONFIG.threshold)
+        
+        sensor = BarometerSensor()
+        sensor.CONFIG.set(config: ["frequency":frequency, "period":period, "threshold":threshold])
         XCTAssertEqual(frequency, sensor.CONFIG.frequency)
         XCTAssertEqual(period,    sensor.CONFIG.period)
         XCTAssertEqual(threshold, sensor.CONFIG.threshold)

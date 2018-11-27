@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.barometer'
   s.version          = '0.1.2'
-  s.summary          = 'A short description of com.awareframework.ios.sensor.barometer.'
+  s.summary          = 'A Barometer Sensor Module for AWARE Framework.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  This sensor module allows us to manage air-pressure data provided by iOS [CMAltimeter](https://developer.apple.com/documentation/coremotion/cmaltimeter).
                        DESC
 
   s.homepage         = 'https://github.com/awareframework/com.awareframework.ios.sensor.barometer'
@@ -42,6 +42,6 @@ TODO: Add long description of the pod here.
   s.frameworks = 'CoreMotion' #'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 
-  s.dependency 'com.awareframework.ios.sensor.core'
+  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.1'
 
 end

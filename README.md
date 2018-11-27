@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/com.awareframework.ios.sensor.barometer.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.barometer)
 [![Platform](https://img.shields.io/cocoapods/p/com.awareframework.ios.sensor.barometer.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.barometer)
 
-**Aware Barometer** (com.awareframework.ios.sensor.barometer) is a plugin for AWARE Framework which is one of an open-source context-aware instrument. This plugin allows us to manage air-pressure data provided by iOS [CMAltimeter](https://developer.apple.com/documentation/coremotion/cmaltimeter).
+This sensor module allows us to manage air-pressure data provided by iOS [CMAltimeter](https://developer.apple.com/documentation/coremotion/cmaltimeter).
 
 ## Requirements
 iOS 10 or later
@@ -29,9 +29,9 @@ import com_awareframework_ios_sensor_barometer
 
 ### BarometerSensor
 
-+ `start(context: Context, config: BarometerSensor.Config?)`: Starts the barometer sensor with the optional configuration.
-+ `stop(context: Context)`: Stops the service.
-+ `currentInterval`: Data collection rate per second. (e.g. 5 samples per second)
++ `init(config:BarometerSensor.Config)` : Initializes the baromter sensor with the optional configuration.
++ `start()`: Starts the barometer sensor with the optional configuration.
++ `stop()`: Stops the service.
 
 ### BarometerSensor.Config
 
