@@ -186,7 +186,7 @@ public class BarometerSensor: AwareSensor {
     
     public override func sync(force: Bool = false) {
         if let engine = self.dbEngine{
-            engine.startSync(BarometerData.TABLE_NAME, DbSyncConfig.init().apply{config in
+            engine.startSync(BarometerData.TABLE_NAME, BarometerData.self, DbSyncConfig.init().apply{config in
                 config.debug = CONFIG.debug
             })
         }
