@@ -38,7 +38,7 @@ import com_awareframework_ios_sensor_barometer
 Class to hold the configuration of the sensor.
 
 #### Fields
-+ `sensorObserver: BarometerSensor.Observer`: Callback for live data updates.
++ `sensorObserver: BarometerObserver`: Callback for live data updates.
 + `frequency: Int`: Data samples to collect per second (Hz). (default = 5)
 + `period: Double`: Period to save data in minutes. (default = 1)
 + `threshold: Double`: If set, do not record consecutive points if change in value is less than the set value.
