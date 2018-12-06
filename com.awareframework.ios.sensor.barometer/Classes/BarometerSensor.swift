@@ -25,15 +25,15 @@ public class BarometerSensor: AwareSensor {
     
     public static let TAG = "AWARE::Barometer"
     
-    public static let ACTION_AWARE_BAROMETER = "ACTION_AWARE_BAROMETER"
+    public static let ACTION_AWARE_BAROMETER = "com.awareframework.ios.sensor.barometer.ACTION_AWARE_BAROMETER"
     
-    public static let ACTION_AWARE_BAROMETER_START = "com.awareframework.android.sensor.barometer.SENSOR_START"
-    public static let ACTION_AWARE_BAROMETER_STOP = "com.awareframework.android.sensor.barometer.SENSOR_STOP"
+    public static let ACTION_AWARE_BAROMETER_START = "com.awareframework.ios.sensor.barometer.SENSOR_START"
+    public static let ACTION_AWARE_BAROMETER_STOP = "com.awareframework.ios.sensor.barometer.SENSOR_STOP"
     
-    public static let ACTION_AWARE_BAROMETER_SET_LABEL = "com.awareframework.android.sensor.barometer.ACTION_AWARE_BAROMETER_SET_LABEL"
+    public static let ACTION_AWARE_BAROMETER_SET_LABEL = "com.awareframework.ios.sensor.barometer.ACTION_AWARE_BAROMETER_SET_LABEL"
     public static let EXTRA_LABEL = "label"
     
-    public static let ACTION_AWARE_BAROMETER_SYNC = "com.awareframework.android.sensor.barometer.SENSOR_SYNC"
+    public static let ACTION_AWARE_BAROMETER_SYNC = "com.awareframework.ios.sensor.barometer.SENSOR_SYNC"
     
     public var CONFIG = Config()
     
@@ -106,8 +106,8 @@ public class BarometerSensor: AwareSensor {
     var altimeter = CMAltimeter()
     var lastSaveTime:Double  = 0
     var lastEventTime:Double = 0
-    var lastAltimeterData:CMAltitudeData? = nil
-    var currentAltimeterData:CMAltitudeData? = nil
+    var lastPressure:NSNumber? = nil
+    var currentPressure:NSNumber? = nil
     var dataArray = Array<BarometerData>()
     
     public override func start() {
@@ -120,68 +120,29 @@ public class BarometerSensor: AwareSensor {
                  * threshold: Double: If set, do not record consecutive points if change in value is less than the set value.
                  */
                 if let altData = altimeterData {
-                    self.currentAltimeterData = altData
+                    self.currentPressure = altData.pressure
                 }
             }
-        }
-        if self.timer == nil {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1.0/Double(self.CONFIG.frequency) , repeats: true, block: { (timer) in
-                if let altData = self.currentAltimeterData {
-                    let now = Date().timeIntervalSince1970
-                    
-                    var isSkip = false
-                    
-                    /** threshold filter */
-                    if self.CONFIG.threshold != 0 {
-                        if let lastAltData = self.lastAltimeterData {
-                            let gap = abs(altData.pressure.doubleValue - lastAltData.pressure.doubleValue)
-                            if gap < self.CONFIG.threshold {
-                                if self.CONFIG.debug { print(BarometerSensor.TAG, "skip", "threshold", gap) }
-                                isSkip = true
-                            }
-                        }
+            if self.timer == nil {
+                self.timer = Timer.scheduledTimer(withTimeInterval: 1.0/Double(self.CONFIG.frequency) , repeats: true, block: { (timer) in
+                    if let data = self.currentPressure {
+                        self.save(pressure: data.doubleValue)
                     }
-                    
-                    if !isSkip {
-                        let data = BarometerData()
-                        data.pressure = altData.pressure.doubleValue          // TODO: check the data format
-                        data.eventTimestamp = Int64(altData.timestamp * 1000) // TODO: check the data format
-                        if let observer = self.CONFIG.sensorObserver{
-                            observer.onDataChanged(data: data)
-                        }
-                        self.notificationCenter.post(name: .actionAwareBarometer, object: nil)
-                        self.dataArray.append(data)
-                        
-                        self.lastAltimeterData = altData
-                        self.lastEventTime = now
-                    }
-                    
-                    /** MEMO: Save dataArray if the "current time" is bigger than "last time" + "save period" */
-                    if (self.lastSaveTime + (self.CONFIG.period * 60.0) ) < now {
-                        /// save data
-                        if let engin = self.dbEngine {
-                            if self.dataArray.count > 0 {
-                                engin.save(self.dataArray, BarometerData.TABLE_NAME)
-                                if self.CONFIG.debug { print(BarometerSensor.TAG, "save data") }
-                            }else{
-                                if self.CONFIG.debug { print(BarometerSensor.TAG, "no data") }
-                            }
-                        }
-                        self.lastSaveTime = now
-                    }
-                    self.notificationCenter.post(name: .actionAwareBarometerStart, object: nil)
-                }
-            })
+                })
+            }
+            self.notificationCenter.post(name: .actionAwareBarometerStart, object: nil)
         }
     }
     
     public override func stop() {
-        altimeter.stopRelativeAltitudeUpdates()
-        if let t = self.timer{
-            t.invalidate()
-            self.timer = nil
+        if CMAltimeter.isRelativeAltitudeAvailable() {
+            altimeter.stopRelativeAltitudeUpdates()
+            if let t = self.timer{
+                t.invalidate()
+                self.timer = nil
+            }
+            self.notificationCenter.post(name: .actionAwareBarometerStop, object: nil)
         }
-        self.notificationCenter.post(name: .actionAwareBarometerStop, object: nil)
     }
     
     public override func sync(force: Bool = false) {
@@ -189,8 +150,61 @@ public class BarometerSensor: AwareSensor {
             engine.startSync(BarometerData.TABLE_NAME, BarometerData.self, DbSyncConfig.init().apply{config in
                 config.debug = CONFIG.debug
             })
+            self.notificationCenter.post(name: .actionAwareBarometerSync, object: nil)
         }
-        self.notificationCenter.post(name: .actionAwareBarometerSync, object: nil)
     }
     
+    public func set(label:String){
+        self.CONFIG.label = label
+        self.notificationCenter.post(name: .actionAwareBarometerSetLabel,
+                                     object:nil,
+                                     userInfo:[BarometerSensor.EXTRA_LABEL:label] )
+    }
+    
+    // The pressure in kPa.
+    public func save(pressure:Double){
+        let now = Date().timeIntervalSince1970
+        
+        var isSkip = false
+        
+        /** threshold filter */
+        if self.CONFIG.threshold != 0 {
+            if let lastAltData = self.lastPressure {
+                let gap = abs(pressure - lastAltData.doubleValue)
+                if gap < self.CONFIG.threshold {
+                    if self.CONFIG.debug { print(BarometerSensor.TAG, "skip", "threshold", gap) }
+                    isSkip = true
+                }
+            }
+        }
+        
+        if !isSkip {
+            let data = BarometerData()
+            data.pressure = pressure          // TODO: check the data format
+            data.eventTimestamp = Int64(data.timestamp * 1000) // TODO: check the data format
+            if let observer = self.CONFIG.sensorObserver{
+                observer.onDataChanged(data: data)
+            }
+            self.notificationCenter.post(name: .actionAwareBarometer, object: nil)
+            self.dataArray.append(data)
+            
+            self.lastPressure = pressure as NSNumber
+            self.lastEventTime = now
+        }
+        
+        /** MEMO: Save dataArray if the "current time" is bigger than "last time" + "save period" */
+        if (self.lastSaveTime + (self.CONFIG.period * 60.0) ) < now {
+            /// save data
+            if let engin = self.dbEngine {
+                if self.dataArray.count > 0 {
+                    engin.save(self.dataArray, BarometerData.TABLE_NAME)
+                    if self.CONFIG.debug { print(BarometerSensor.TAG, "save data") }
+                }else{
+                    if self.CONFIG.debug { print(BarometerSensor.TAG, "no data") }
+                }
+            }
+            self.notificationCenter.post(name: .actionAwareBarometer, object: nil)
+            self.lastSaveTime = now
+        }
+    }
 }
