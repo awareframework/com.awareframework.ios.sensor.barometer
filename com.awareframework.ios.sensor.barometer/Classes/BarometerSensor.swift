@@ -195,6 +195,7 @@ public class BarometerSensor: AwareSensor {
             let data = BarometerData()
             data.pressure = pressure          // TODO: check the data format
             data.eventTimestamp = Int64(data.timestamp * 1000) // TODO: check the data format
+            data.label = self.CONFIG.label
             if let observer = self.CONFIG.sensorObserver{
                 observer.onDataChanged(data: data)
             }
