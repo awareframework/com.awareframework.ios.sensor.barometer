@@ -14,6 +14,7 @@ extension Notification.Name{
     public static let actionAwareBarometerStart = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER_START)
     public static let actionAwareBarometerStop  = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER_STOP)
     public static let actionAwareBarometerSync  = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER_SYNC)
+    public static let actionAwareBarometerSyncCompletion  = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER_SYNC_COMPLETION)
     public static let actionAwareBarometerSetLabel = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER_SET_LABEL)
 }
 
@@ -25,7 +26,7 @@ public class BarometerSensor: AwareSensor {
     
     public static let TAG = "AWARE::Barometer"
     
-    public static let ACTION_AWARE_BAROMETER = "com.awareframework.ios.sensor.barometer.ACTION_AWARE_BAROMETER"
+    public static let ACTION_AWARE_BAROMETER = "com.awareframework.ios.sensor.barometer"
     
     public static let ACTION_AWARE_BAROMETER_START = "com.awareframework.ios.sensor.barometer.SENSOR_START"
     public static let ACTION_AWARE_BAROMETER_STOP = "com.awareframework.ios.sensor.barometer.SENSOR_STOP"
@@ -34,6 +35,7 @@ public class BarometerSensor: AwareSensor {
     public static let EXTRA_LABEL = "label"
     
     public static let ACTION_AWARE_BAROMETER_SYNC = "com.awareframework.ios.sensor.barometer.SENSOR_SYNC"
+    public static let ACTION_AWARE_BAROMETER_SYNC_COMPLETION = "com.awareframework.ios.sensor.barometer.SENSOR_SYNC_COMPLETION"
     
     public var CONFIG = Config()
     
@@ -130,7 +132,7 @@ public class BarometerSensor: AwareSensor {
                     }
                 })
             }
-            self.notificationCenter.post(name: .actionAwareBarometerStart, object: nil)
+            self.notificationCenter.post(name: .actionAwareBarometerStart, object: self)
         }
     }
     
@@ -141,7 +143,7 @@ public class BarometerSensor: AwareSensor {
                 t.invalidate()
                 self.timer = nil
             }
-            self.notificationCenter.post(name: .actionAwareBarometerStop, object: nil)
+            self.notificationCenter.post(name: .actionAwareBarometerStop, object: self)
         }
     }
     
@@ -149,12 +151,23 @@ public class BarometerSensor: AwareSensor {
         if let engine = self.dbEngine{
             engine.startSync(BarometerData.TABLE_NAME, BarometerData.self, DbSyncConfig.init().apply{config in
                 config.debug = CONFIG.debug
+                config.debug = self.CONFIG.debug
+                config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.sync.queue")
+                config.completionHandler = { (status, error) in
+                    var userInfo: Dictionary<String,Any> = ["status":status]
+                    if let e = error {
+                        userInfo["error"] = e
+                    }
+                    self.notificationCenter.post(name: .actionAwareBarometerSyncCompletion,
+                                                 object: self,
+                                                 userInfo:userInfo)
+                }
             })
-            self.notificationCenter.post(name: .actionAwareBarometerSync, object: nil)
+            self.notificationCenter.post(name: .actionAwareBarometerSync, object: self)
         }
     }
     
-    public func set(label:String){
+    public override func set(label:String){
         self.CONFIG.label = label
         self.notificationCenter.post(name: .actionAwareBarometerSetLabel,
                                      object:nil,
@@ -185,7 +198,6 @@ public class BarometerSensor: AwareSensor {
             if let observer = self.CONFIG.sensorObserver{
                 observer.onDataChanged(data: data)
             }
-            self.notificationCenter.post(name: .actionAwareBarometer, object: nil)
             self.dataArray.append(data)
             
             self.lastPressure = pressure as NSNumber
@@ -197,14 +209,24 @@ public class BarometerSensor: AwareSensor {
             /// save data
             if let engin = self.dbEngine {
                 if self.dataArray.count > 0 {
-                    engin.save(self.dataArray, BarometerData.TABLE_NAME)
-                    if self.CONFIG.debug { print(BarometerSensor.TAG, "save data") }
+                
+                    let queue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.save.queue")
+                    queue.async {
+                        engin.save(self.dataArray){ error in
+                            if self.CONFIG.debug { print(BarometerSensor.TAG, "save data") }
+                            DispatchQueue.main.async {
+                                self.notificationCenter.post(name: .actionAwareBarometer, object: self)
+                                self.lastSaveTime = now
+                            }
+                        }
+                    }
                 }else{
                     if self.CONFIG.debug { print(BarometerSensor.TAG, "no data") }
+                    self.lastSaveTime = now
                 }
+            }else{
+                self.lastSaveTime = now
             }
-            self.notificationCenter.post(name: .actionAwareBarometer, object: nil)
-            self.lastSaveTime = now
         }
     }
 }

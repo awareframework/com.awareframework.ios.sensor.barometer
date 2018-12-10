@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.barometer'
-  s.version       = '0.2.3'
+  s.version       = '0.4.0'
   s.summary          = 'A Barometer Sensor Module for AWARE Framework.'
 
 # This description is used to generate tags and improve search results.
@@ -42,6 +42,6 @@ Pod::Spec.new do |s|
   s.frameworks = 'CoreMotion' #'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 
-  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.3'
+  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.4.1'
 
 end
