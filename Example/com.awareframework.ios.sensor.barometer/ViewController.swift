@@ -16,11 +16,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        sensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
-//            config.debug = true
-//            config.sensorObserver = Observer()
-//        })
-//        sensor?.start()
+        sensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
+            config.debug = true
+            config.sensorObserver = Observer()
+            config.frequency = 1
+        })
+        sensor?.start()
     }
 
     class Observer:BarometerObserver {
