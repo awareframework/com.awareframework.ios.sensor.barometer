@@ -20,6 +20,7 @@ class ViewController: UIViewController {
             config.debug = true
             config.sensorObserver = Observer()
             config.frequency = 1
+            config.period = 0.1
         })
         sensor?.start()
     }

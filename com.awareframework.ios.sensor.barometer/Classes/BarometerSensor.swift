@@ -221,6 +221,7 @@ public class BarometerSensor: AwareSensor {
                             }
                         }
                     }
+                    self.dataArray.removeAll()
                 }else{
                     if self.CONFIG.debug { print(BarometerSensor.TAG, "no data") }
                     self.lastSaveTime = now
