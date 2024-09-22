@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1961F2A72EF0FEBF66FC6EE7 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB54A3F7CA8CC4082657D0C1 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */; };
+		384EB26F4C978443E31FC538 /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BCC5F12C0B52F9D793B4AFF /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		8167FD28E88A46611D38F76D /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6CBF099021A8798EF97EC93 /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */; };
+		BFF3B7CD4EAF073A792B95AE /* Pods_com_awareframework_ios_sensor_barometer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A20C69608369246CE63D2D7 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,9 +29,9 @@
 
 /* Begin PBXFileReference section */
 		10AB74A1213BEE5344477911 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		29B9CA1E73AFE8484109BF32 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Tests/Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		1A20C69608369246CE63D2D7 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_com_awareframework_ios_sensor_barometer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		218E272F00A6ECAB8ECA3C31 /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig"; path = "Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Example/Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		2BE994CD2CBD0D76AD48E42E /* com.awareframework.ios.sensor.barometer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = com.awareframework.ios.sensor.barometer.podspec; path = ../com.awareframework.ios.sensor.barometer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		39AF8FB81557506307C26D5D /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Example/Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* com.awareframework.ios.sensor.barometer_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.awareframework.ios.sensor.barometer_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,11 +42,11 @@
 		607FACE51AFB9204008FA782 /* com.awareframework.ios.sensor.barometer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = com.awareframework.ios.sensor.barometer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		6ECE96EFAE60FAAC4A3BA207 /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Tests/Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		8CAE2DF306B474EC9671B005 /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Example/Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig"; sourceTree = "<group>"; };
-		A6CBF099021A8798EF97EC93 /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_com_awareframework_ios_sensor_barometer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		747C5EFA901539344514F06A /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig"; path = "Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Tests/Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		9679220DC212E10782FDC173 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Tests/Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		9BCC5F12C0B52F9D793B4AFF /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_com_awareframework_ios_sensor_barometer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C671B77C1C1433EA8BEDE5DC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		DB54A3F7CA8CC4082657D0C1 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_com_awareframework_ios_sensor_barometer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F73225E2FC7D38C2D8CFF63B /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig"; path = "Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Example/Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1961F2A72EF0FEBF66FC6EE7 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework in Frameworks */,
+				BFF3B7CD4EAF073A792B95AE /* Pods_com_awareframework_ios_sensor_barometer_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,31 +62,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8167FD28E88A46611D38F76D /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework in Frameworks */,
+				384EB26F4C978443E31FC538 /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02B63E4F93BF90086167E0BA /* Pods */ = {
+		2265682D60BD9C786DB45C6C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				39AF8FB81557506307C26D5D /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */,
-				8CAE2DF306B474EC9671B005 /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */,
-				29B9CA1E73AFE8484109BF32 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */,
-				6ECE96EFAE60FAAC4A3BA207 /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */,
+				218E272F00A6ECAB8ECA3C31 /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */,
+				F73225E2FC7D38C2D8CFF63B /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */,
+				9679220DC212E10782FDC173 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */,
+				747C5EFA901539344514F06A /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		4DF91E4869C3EAE092B1A634 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DB54A3F7CA8CC4082657D0C1 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */,
-				A6CBF099021A8798EF97EC93 /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */,
-			);
-			name = Frameworks;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -96,8 +88,8 @@
 				607FACD21AFB9204008FA782 /* Example for com.awareframework.ios.sensor.barometer */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				02B63E4F93BF90086167E0BA /* Pods */,
-				4DF91E4869C3EAE092B1A634 /* Frameworks */,
+				2265682D60BD9C786DB45C6C /* Pods */,
+				ACF8E6727C98630CBCE6D0C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,6 +151,15 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		ACF8E6727C98630CBCE6D0C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A20C69608369246CE63D2D7 /* Pods_com_awareframework_ios_sensor_barometer_Example.framework */,
+				9BCC5F12C0B52F9D793B4AFF /* Pods_com_awareframework_ios_sensor_barometer_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -166,11 +167,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "com.awareframework.ios.sensor.barometer_Example" */;
 			buildPhases = (
-				0F7FD6C4B8F805D2724D9A9D /* [CP] Check Pods Manifest.lock */,
+				4C2981413154565724008DCB /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				4CAB878E95B64A46C7138078 /* [CP] Embed Pods Frameworks */,
+				6A762EEFD081C37241653E0C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -185,7 +186,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "com.awareframework.ios.sensor.barometer_Tests" */;
 			buildPhases = (
-				AD5020EE27EC74404D957C08 /* [CP] Check Pods Manifest.lock */,
+				7BFD66F07AF1CC1121A3FE18 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -264,7 +265,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F7FD6C4B8F805D2724D9A9D /* [CP] Check Pods Manifest.lock */ = {
+		4C2981413154565724008DCB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -286,7 +287,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4CAB878E95B64A46C7138078 /* [CP] Embed Pods Frameworks */ = {
+		6A762EEFD081C37241653E0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,7 +315,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-com.awareframework.ios.sensor.barometer_Example/Pods-com.awareframework.ios.sensor.barometer_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AD5020EE27EC74404D957C08 /* [CP] Check Pods Manifest.lock */ = {
+		7BFD66F07AF1CC1121A3FE18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -491,7 +492,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39AF8FB81557506307C26D5D /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */;
+			baseConfigurationReference = 218E272F00A6ECAB8ECA3C31 /* Pods-com.awareframework.ios.sensor.barometer_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = FH352PYMNC;
@@ -507,7 +508,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CAE2DF306B474EC9671B005 /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */;
+			baseConfigurationReference = F73225E2FC7D38C2D8CFF63B /* Pods-com.awareframework.ios.sensor.barometer_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = FH352PYMNC;
@@ -523,7 +524,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29B9CA1E73AFE8484109BF32 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */;
+			baseConfigurationReference = 9679220DC212E10782FDC173 /* Pods-com.awareframework.ios.sensor.barometer_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -543,7 +544,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6ECE96EFAE60FAAC4A3BA207 /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */;
+			baseConfigurationReference = 747C5EFA901539344514F06A /* Pods-com.awareframework.ios.sensor.barometer_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = FH352PYMNC;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
