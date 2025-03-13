@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.barometer'
-  s.version          = '0.7.4'
+  s.version          = '0.7.5'
   s.summary          = 'A Barometer Sensor Module for AWARE Framework.'
 
 # This description is used to generate tags and improve search results.
@@ -28,8 +28,8 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/awareframework/com.awareframework.ios.sensor.barometer.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
   
-  s.platform              = :ios, '12.0'
-  s.ios.deployment_target = '12.0'
+  s.platform              = :ios, '13.0'
+  s.ios.deployment_target = '13.0'
 
   s.swift_version = '5'
 
