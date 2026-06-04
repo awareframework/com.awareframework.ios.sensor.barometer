@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreMotion
-import com_awareframework_ios_sensor_core
+import com_awareframework_ios_core
 
 extension Notification.Name{
     public static let actionAwareBarometer      = Notification.Name(BarometerSensor.ACTION_AWARE_BAROMETER)
@@ -39,7 +39,13 @@ public class BarometerSensor: AwareSensor {
     
     public var CONFIG = Config()
     
-    var timer:Timer? = nil
+    private let altimeterQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.name = "com.awareframework.ios.sensor.barometer.altimeter.queue"
+        queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .utility
+        return queue
+    }()
     
     public class Config:SensorConfig{
         /**
@@ -111,26 +117,26 @@ public class BarometerSensor: AwareSensor {
     var lastPressure:NSNumber? = nil
     var currentPressure:NSNumber? = nil
     var dataArray = Array<BarometerData>()
+    private let saveQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.save.queue")
     
     public override func start() {
         // https://developer.apple.com/documentation/coremotion/cmaltimeter
         if CMAltimeter.isRelativeAltitudeAvailable() {
-            altimeter.startRelativeAltitudeUpdates(to: OperationQueue.main) { (altimeterData, error) in
+            altimeter.startRelativeAltitudeUpdates(to: altimeterQueue) { (altimeterData, error) in
                 /**
                  * interval: Int: Data samples to collect per second. (default = 5)
                  * period: Float: Period to save data in minutes. (default = 1)
                  * threshold: Double: If set, do not record consecutive points if change in value is less than the set value.
                  */
                 if let altData = altimeterData {
-                    self.currentPressure = altData.pressure
-                }
-            }
-            if self.timer == nil {
-                self.timer = Timer.scheduledTimer(withTimeInterval: 1.0/Double(self.CONFIG.frequency) , repeats: true, block: { (timer) in
-                    if let data = self.currentPressure {
-                        self.save(pressure: data.doubleValue)
+                    let now = Date().timeIntervalSince1970
+                    let updateInterval = 1.0 / Double(max(1, self.CONFIG.frequency))
+                    if now < self.lastEventTime + updateInterval {
+                        return
                     }
-                })
+                    self.currentPressure = altData.pressure
+                    self.save(pressure: altData.pressure.doubleValue)
+                }
             }
             self.notificationCenter.post(name: .actionAwareBarometerStart, object: self)
         }
@@ -139,17 +145,14 @@ public class BarometerSensor: AwareSensor {
     public override func stop() {
         if CMAltimeter.isRelativeAltitudeAvailable() {
             altimeter.stopRelativeAltitudeUpdates()
-            if let t = self.timer{
-                t.invalidate()
-                self.timer = nil
-            }
+            altimeterQueue.cancelAllOperations()
             self.notificationCenter.post(name: .actionAwareBarometerStop, object: self)
         }
     }
     
     public override func sync(force: Bool = false) {
         if let engine = self.dbEngine{
-            engine.startSync(BarometerData.TABLE_NAME, BarometerData.self, DbSyncConfig.init().apply{config in
+            engine.startSync(DbSyncConfig.init().apply{config in
                 config.debug = CONFIG.debug
                 config.debug = self.CONFIG.debug
                 config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.sync.queue")
@@ -192,9 +195,10 @@ public class BarometerSensor: AwareSensor {
         }
         
         if !isSkip {
-            let data = BarometerData()
+            var data = BarometerData()
             data.pressure = pressure          // TODO: check the data format
-            data.eventTimestamp = Int64(data.timestamp * 1000) // TODO: check the data format
+            data.timestamp = Int64(now * 1000)
+            data.eventTimestamp = Int64(now * 1000)
             data.label = self.CONFIG.label
             if let observer = self.CONFIG.sensorObserver{
                 observer.onDataChanged(data: data)
@@ -210,10 +214,10 @@ public class BarometerSensor: AwareSensor {
             /// save data
             if let engin = self.dbEngine {
                 if self.dataArray.count > 0 {
-                
-                    let queue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.save.queue")
-                    queue.async {
-                        engin.save(self.dataArray){ error in
+                    let bufferedData = self.dataArray
+                    self.dataArray.removeAll()
+                    saveQueue.async {
+                        engin.save(bufferedData){ error in
                             if self.CONFIG.debug { print(BarometerSensor.TAG, "save data") }
                             DispatchQueue.main.async {
                                 self.notificationCenter.post(name: .actionAwareBarometer, object: self)
@@ -221,7 +225,6 @@ public class BarometerSensor: AwareSensor {
                             }
                         }
                     }
-                    self.dataArray.removeAll()
                 }else{
                     if self.CONFIG.debug { print(BarometerSensor.TAG, "no data") }
                     self.lastSaveTime = now
