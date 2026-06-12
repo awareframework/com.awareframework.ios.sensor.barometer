@@ -10,7 +10,7 @@ public struct BarometerData: BaseDbModelSQLite {
     public var timezone: Int = AwareUtils.getTimeZone()
     public var os: String = "iOS"
     public var jsonVersion: Int = 1
-    public static let databaseTableName = "barometerData"
+    public static let databaseTableName = "ios_barometer"
 
     public var pressure: Double = 0
     public var eventTimestamp: Int64 = 0

@@ -108,6 +108,9 @@ public class BarometerSensor: AwareSensor {
         super.init()
         CONFIG = config
         initializeDbEngine(config: config)
+        super.syncConfig = DbSyncConfig().apply { c in
+            c.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.sync.queue")
+        }
     }
     
     ////////////////////////////////////
@@ -151,23 +154,15 @@ public class BarometerSensor: AwareSensor {
     }
     
     public override func sync(force: Bool = false) {
-        if let engine = self.dbEngine{
-            engine.startSync(DbSyncConfig.init().apply{config in
-                config.debug = CONFIG.debug
-                config.debug = self.CONFIG.debug
-                config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.sync.queue")
-                config.completionHandler = { (status, error) in
-                    var userInfo: Dictionary<String,Any> = ["status":status]
-                    if let e = error {
-                        userInfo["error"] = e
-                    }
-                    self.notificationCenter.post(name: .actionAwareBarometerSyncCompletion,
-                                                 object: self,
-                                                 userInfo:userInfo)
-                }
-            })
-            self.notificationCenter.post(name: .actionAwareBarometerSync, object: self)
+        guard let engine = self.dbEngine, let syncConfig = self.syncConfig else { return }
+        syncConfig.debug = self.CONFIG.debug
+        syncConfig.completionHandler = { (status, error) in
+            var userInfo: Dictionary<String,Any> = ["status": status]
+            if let e = error { userInfo["error"] = e }
+            self.notificationCenter.post(name: .actionAwareBarometerSyncCompletion, object: self, userInfo: userInfo)
         }
+        engine.startSync(syncConfig)
+        self.notificationCenter.post(name: .actionAwareBarometerSync, object: self)
     }
     
     public override func set(label:String){

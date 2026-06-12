@@ -53,22 +53,22 @@ Class to hold the configuration of the sensor.
 
 Contains the raw sensor data.
 
-| Field     | Type   | Description                                                      |
-| --------- | ------ | ---------------------------------------------------------------- |
-| pressure  | Double | The recorded pressure, in kilopascals (kPs).                     |
-| label     | String | Customizable label. Useful for data calibration or traceability  |
-| deviceId  | String | AWARE device UUID                                                |
-| label     | String | Customizable label. Useful for data calibration or traceability  |
-| timestamp | Int64   | Unixtime milliseconds since 1970                                 |
-| timezone  | Int    | Timezone of the device                                           |
-| os        | String | Operating system of the device (ex. android)                     |
+| Field          | Type   | Description                                                      |
+| -------------- | ------ | ---------------------------------------------------------------- |
+| pressure       | Double | The recorded pressure, in kilopascals (kPs).                     |
+| eventTimestamp | Int64  | Unixtime milliseconds of the actual sensor event                 |
+| label          | String | Customizable label. Useful for data calibration or traceability  |
+| deviceId       | String | AWARE device UUID                                                |
+| timestamp      | Int64  | Unixtime milliseconds since 1970                                 |
+| timezone       | Int    | Timezone of the device                                           |
+| os             | String | Operating system of the device (ex. ios)                         |
+| jsonVersion    | Int    | JSON schema version                                              |
 
 ## Example usage
 ```swift
 var barometerSensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
     config.sensorObserver = Observer()
     config.debug = true
-    config.dbType = .REALM
 })
 barometerSensor?.start()
 barometerSensor?.stop()
