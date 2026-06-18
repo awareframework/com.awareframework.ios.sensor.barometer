@@ -160,36 +160,36 @@ class Tests: XCTestCase {
     }
 
     func testConfig(){
-        let frequency: Int = 10
-        let period: Double = 10.0
+        let samplingFrequencyHz: Int = 10
+        let saveIntervalSeconds: Double = 10.0
         let threshold: Double = 1.0
 
         // default values
         var sensor = BarometerSensor.init()
-        XCTAssertEqual(5,   sensor.CONFIG.frequency)
-        XCTAssertEqual(1.0, sensor.CONFIG.period)
+        XCTAssertEqual(5,   sensor.CONFIG.samplingFrequencyHz)
+        XCTAssertEqual(60.0, sensor.CONFIG.saveIntervalSeconds)
         XCTAssertEqual(0.0, sensor.CONFIG.threshold)
 
         // apply
         sensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
-            config.frequency = frequency
-            config.period = period
+            config.samplingFrequencyHz = samplingFrequencyHz
+            config.saveIntervalSeconds = saveIntervalSeconds
             config.threshold = threshold
         })
-        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
-        XCTAssertEqual(period,    sensor.CONFIG.period)
+        XCTAssertEqual(samplingFrequencyHz, sensor.CONFIG.samplingFrequencyHz)
+        XCTAssertEqual(saveIntervalSeconds,    sensor.CONFIG.saveIntervalSeconds)
         XCTAssertEqual(threshold, sensor.CONFIG.threshold)
 
         // init with dictionary
-        sensor = BarometerSensor.init(BarometerSensor.Config.init(["frequency":frequency, "period":period, "threshold":threshold]))
-        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
-        XCTAssertEqual(period,    sensor.CONFIG.period)
+        sensor = BarometerSensor.init(BarometerSensor.Config.init(["samplingFrequencyHz":samplingFrequencyHz, "saveIntervalSeconds":saveIntervalSeconds, "threshold":threshold]))
+        XCTAssertEqual(samplingFrequencyHz, sensor.CONFIG.samplingFrequencyHz)
+        XCTAssertEqual(saveIntervalSeconds,    sensor.CONFIG.saveIntervalSeconds)
         XCTAssertEqual(threshold, sensor.CONFIG.threshold)
 
         sensor = BarometerSensor()
-        sensor.CONFIG.set(config: ["frequency":frequency, "period":period, "threshold":threshold])
-        XCTAssertEqual(frequency, sensor.CONFIG.frequency)
-        XCTAssertEqual(period,    sensor.CONFIG.period)
+        sensor.CONFIG.set(config: ["samplingFrequencyHz":samplingFrequencyHz, "saveIntervalSeconds":saveIntervalSeconds, "threshold":threshold])
+        XCTAssertEqual(samplingFrequencyHz, sensor.CONFIG.samplingFrequencyHz)
+        XCTAssertEqual(saveIntervalSeconds,    sensor.CONFIG.saveIntervalSeconds)
         XCTAssertEqual(threshold, sensor.CONFIG.threshold)
     }
 

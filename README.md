@@ -13,7 +13,7 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 
 ### SwiftPM
 1. Open Package Manager Windows
-    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...` 
+    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...`
 
 2. Find the package using the manager
     * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.barometer.git`
@@ -21,11 +21,11 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 3. Import the package into your target.
 
 
-## Public functions
+## Public Functions
 
 ### BarometerSensor
 
-+ `init(config:BarometerSensor.Config)` : Initializes the baromter sensor with the optional configuration.
++ `init(config:BarometerSensor.Config)`: Initializes the baromter sensor with the optional configuration.
 + `start()`: Starts the barometer sensor with the optional configuration.
 + `stop()`: Stops the service.
 
@@ -34,18 +34,19 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 Class to hold the configuration of the sensor.
 
 #### Fields
+
 + `sensorObserver: BarometerObserver`: Callback for live data updates.
-+ `frequency: Int`: Data samples to collect per second (Hz). (default = 5)
-+ `period: Double`: Period to save data in minutes. (default = 1)
++ `samplingFrequencyHz: Int`: Data samples to collect per second (Hz). (default = `5`)
++ `saveIntervalSeconds: Double`: Interval in seconds at which buffered data is saved to the database. (default = `60`)
 + `threshold: Double`: If set, do not record consecutive points if change in value is less than the set value.
-+ `enabled: Boolean` Sensor is enabled or not. (default = `false`)
-+ `debug: Boolean` enable/disable logging to `Logcat`. (default = `false`)
-+ `label: String` Label for the data. (default = "")
-+ `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
-+ `dbEncryptionKey` Encryption key for the database. (default = `null`)
-+ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
-+ `dbPath: String` Path of the database. (default = "aware_barometer")
-+ `dbHost: String` Host for syncing the database. (default = `null`)
++ `enabled: Bool`: Sensor is enabled or not. (default = `false`)
++ `debug: Bool`: Enable/disable logging. (default = `false`)
++ `label: String`: Label for the data. (default = `""`)
++ `deviceId: String`: Id of the device that will be associated with the events and the sensor. (default = `""`)
++ `dbEncryptionKey: String?`: Encryption key for the database. (default = `nil`)
++ `dbType: DatabaseType`: Which db engine to use for saving data. (default = `.none`)
++ `dbPath: String`: Path of the database. (default = `"aware_barometer"`)
++ `dbHost: String?`: Host for syncing the database. (default = `nil`)
 
 ## Data Representations
 
@@ -64,9 +65,9 @@ Contains the raw sensor data.
 | os             | String | Operating system of the device (ex. ios)                         |
 | jsonVersion    | Int    | JSON schema version                                              |
 
-## Example usage
+## Example Usage
 ```swift
-var barometerSensor = BarometerSensor.init(BarometerSensor.Config().apply{config in
+var barometerSensor = BarometerSensor.init(BarometerSensor.Config().apply { config in
     config.sensorObserver = Observer()
     config.debug = true
 })

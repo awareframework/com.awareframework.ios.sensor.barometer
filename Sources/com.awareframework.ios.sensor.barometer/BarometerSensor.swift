@@ -61,12 +61,12 @@ public class BarometerSensor: AwareSensor {
          * 20 - sample per second
          * The maximum interval is 1 on iOS.
          */
-        public var frequency: Int = 5
+        public var samplingFrequencyHz: Int = 5
         
         /**
-         * Period to save data in minutes. (optional)
+         * Period to save data in seconds. (optional)
          */
-        public var period: Double = 1
+        public var saveIntervalSeconds: Double = 60
         
         /**
          * Barometer threshold (double).  Do not record consecutive points if
@@ -81,12 +81,12 @@ public class BarometerSensor: AwareSensor {
         
         public override func set(config: Dictionary<String, Any>) {
             super.set(config: config)
-            if let frequency = config["frequency"] as? Int {
-                self.frequency = frequency
+            if let samplingFrequencyHz = config["samplingFrequencyHz"] as? Int {
+                self.samplingFrequencyHz = samplingFrequencyHz
             }
             
-            if let period = config["period"] as? Double {
-                self.period = period
+            if let saveIntervalSeconds = config["saveIntervalSeconds"] as? Double {
+                self.saveIntervalSeconds = saveIntervalSeconds
             }
             
             if let threshold = config["threshold"] as? Double {
@@ -128,12 +128,12 @@ public class BarometerSensor: AwareSensor {
             altimeter.startRelativeAltitudeUpdates(to: altimeterQueue) { (altimeterData, error) in
                 /**
                  * interval: Int: Data samples to collect per second. (default = 5)
-                 * period: Float: Period to save data in minutes. (default = 1)
+                 * saveIntervalSeconds: Float: Period to save data in seconds. (default = 1)
                  * threshold: Double: If set, do not record consecutive points if change in value is less than the set value.
                  */
                 if let altData = altimeterData {
                     let now = Date().timeIntervalSince1970
-                    let updateInterval = 1.0 / Double(max(1, self.CONFIG.frequency))
+                    let updateInterval = 1.0 / Double(max(1, self.CONFIG.samplingFrequencyHz))
                     if now < self.lastEventTime + updateInterval {
                         return
                     }
@@ -204,8 +204,8 @@ public class BarometerSensor: AwareSensor {
             self.lastEventTime = now
         }
         
-        /** MEMO: Save dataArray if the "current time" is bigger than "last time" + "save period" */
-        if (self.lastSaveTime + (self.CONFIG.period * 60.0) ) < now {
+        /** MEMO: Save dataArray if the "current time" is bigger than "last time" + "save saveIntervalSeconds" */
+        if (self.lastSaveTime + (self.CONFIG.saveIntervalSeconds) ) < now {
             /// save data
             if let engin = self.dbEngine {
                 if self.dataArray.count > 0 {
