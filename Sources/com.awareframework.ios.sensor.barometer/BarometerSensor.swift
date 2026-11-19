@@ -76,6 +76,7 @@ public class BarometerSensor: AwareSensor {
         
         public override init(){
             super.init()
+            dbTableName = BarometerData.databaseTableName
             dbPath = "aware_barometer"
         }
         
@@ -104,10 +105,32 @@ public class BarometerSensor: AwareSensor {
         self.init(BarometerSensor.Config())
     }
     
+
+    /// Creates this sensor's table if it does not exist yet, so that the first save does not fail.
+    /// Failures are logged: without the table, the data cannot be saved or uploaded.
+    private func initializeTables() {
+        guard CONFIG.dbType == .sqlite else { return }
+        guard let queue = (dbEngine as? SQLiteEngine)?.getSQLiteInstance() else {
+            print(BarometerSensor.TAG, "[Error] Cannot open the database '\(CONFIG.dbPath)'. The table is not created.")
+            return
+        }
+        let tables: [(name: String, create: () throws -> Void)] = [
+            (BarometerData.databaseTableName, { try BarometerData.createTable(queue: queue) }),
+        ]
+        for table in tables {
+            do {
+                try table.create()
+            } catch {
+                print(BarometerSensor.TAG, "[Error] Cannot create the table '\(table.name)': \(error)")
+            }
+        }
+    }
+
     public init(_ config: BarometerSensor.Config){
         super.init()
         CONFIG = config
         initializeDbEngine(config: config)
+        initializeTables()
         super.syncConfig = DbSyncConfig().apply { c in
             c.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.barometer.sync.queue")
         }
